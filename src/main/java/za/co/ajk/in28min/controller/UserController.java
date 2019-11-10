@@ -1,8 +1,8 @@
 package za.co.ajk.in28min.controller;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +39,7 @@ public class UserController {
      */
     @GetMapping
     @ResponseBody
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
@@ -49,7 +49,19 @@ public class UserController {
      * @param userId
      * @return
      */
-    @GetMapping("/{userId}")
+//    @GetMapping(value = "/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+//    public EntityModel<User> getUser(@PathVariable long userId) {
+//
+//        User user = userService.getUser(userId);
+//
+//        //  Also add link to retrieve all the users.
+//        EntityModel<User> model = new EntityModel<>(user);
+//        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
+//        model.add(linkTo.withRel("all-users"));
+//
+//        return model;
+//    }
+    @GetMapping(value = "/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public User getUser(@PathVariable long userId) {
         return userService.getUser(userId);
     }
@@ -74,28 +86,28 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUserById(@PathVariable long userId){
+    public ResponseEntity<?> deleteUserById(@PathVariable long userId) {
         User user = userService.getUser(userId);
-        if(user == null){
-            throw new UserNotFoundException("Cannot find user with id "+userId+" to delete");
+        if (user == null) {
+            throw new UserNotFoundException("Cannot find user with id " + userId + " to delete");
         }
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/userId}/posts")
-    public List<Post> retrieveAllUserPosts(@PathVariable long userId){
+    public List<Post> retrieveAllUserPosts(@PathVariable long userId) {
         return userService.getAllUserPosts(userId);
     }
 
     @PostMapping("/{userId}/posts")
-    public ResponseEntity<Post> createUserPost(@PathVariable long userId, @Valid @RequestBody Post post){
+    public ResponseEntity<Post> createUserPost(@PathVariable long userId, @Valid @RequestBody Post post) {
         userService.createUserPost(userId, post);
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
     @GetMapping("/{userId}/posts/{postId}")
-    public Post getPostDetails(@PathVariable long userId, @PathVariable long postId){
+    public Post getPostDetails(@PathVariable long userId, @PathVariable long postId) {
         return userService.retrieveUserPost(userId, postId);
     }
 }

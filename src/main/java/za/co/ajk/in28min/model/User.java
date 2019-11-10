@@ -1,5 +1,7 @@
 package za.co.ajk.in28min.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@ApiModel(description = "All details about the user")
 public class User {
 
     @Id
@@ -27,9 +30,11 @@ public class User {
     private int Id;
 
     @Size(min = 2, message="Name should have at least two characters")
+    @ApiModelProperty("Name should be at least two characters")
     private String username;
 
     @Past
+    @ApiModelProperty("Birthdate should be in the past")
     private Date birthDate;
 
     private List<Post> userPosts = new ArrayList<>();
