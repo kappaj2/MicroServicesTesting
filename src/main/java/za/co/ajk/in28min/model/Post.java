@@ -9,22 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-//@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
-    private String username;
-    private Date birthDate;
-
-    private List<Post> userPosts = new ArrayList<>();
+    private int id;
+    private String message;
 }
