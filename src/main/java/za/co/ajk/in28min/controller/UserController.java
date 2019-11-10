@@ -18,6 +18,7 @@ import za.co.ajk.in28min.model.Post;
 import za.co.ajk.in28min.model.User;
 import za.co.ajk.in28min.service.impl.UserServiceImpl;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class UserController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User createdUser = userService.saveUser(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").build().expand(createdUser.getId()).toUri();
@@ -69,14 +70,11 @@ public class UserController {
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Location", location.toString());
-
-
         return new ResponseEntity(createdUser, headers, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable long userId){
-
+    public ResponseEntity<?> deleteUserById(@PathVariable long userId){
         User user = userService.getUser(userId);
         if(user == null){
             throw new UserNotFoundException("Cannot find user with id "+userId+" to delete");
@@ -91,7 +89,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/posts")
-    public ResponseEntity<Post> createUserPost(@PathVariable long userId, @RequestBody Post post){
+    public ResponseEntity<Post> createUserPost(@PathVariable long userId, @Valid @RequestBody Post post){
         userService.createUserPost(userId, post);
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
