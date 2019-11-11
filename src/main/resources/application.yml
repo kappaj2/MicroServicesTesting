@@ -6,6 +6,12 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: false
-
   messages:
     basename: messages
+
+# Trim this down for production to prevent performance impact
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
