@@ -9,6 +9,12 @@ spring:
   messages:
     basename: messages
 
+  # default basic security credentials
+  security:
+    user:
+      name: user
+      password: password
+
 # Trim this down for production to prevent performance impact
 management:
   endpoints:
