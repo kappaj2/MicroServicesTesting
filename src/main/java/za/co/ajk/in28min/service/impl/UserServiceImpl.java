@@ -5,6 +5,7 @@ import za.co.ajk.in28min.exceptions.PostNotFoundException;
 import za.co.ajk.in28min.exceptions.UserNotFoundException;
 import za.co.ajk.in28min.model.Post;
 import za.co.ajk.in28min.model.User;
+import za.co.ajk.in28min.repository.UserRepository;
 import za.co.ajk.in28min.service.UserService;
 
 import java.util.ArrayList;
@@ -20,19 +21,23 @@ public class UserServiceImpl implements UserService {
     private static List<Post> userPosts = new ArrayList<>();
 
     static {
-        userList.add(new User(1, "Adam", new Date(), new ArrayList<>()));
-        userList.add(new User(2, "Eve", new Date(), new ArrayList<>()));
-        userList.add(new User(3, "Jack", new Date(), new ArrayList<>()));
+//        userList.add(new User(10001, "Adam", new Date(), new ArrayList<>()));
+//        userList.add(new User(10002, "Eve", new Date(), new ArrayList<>()));
+//        userList.add(new User(3, "Jack", new Date(), new ArrayList<>()));
+//        userList.add(new User(1, "Adam", new Date()));
+//        userList.add(new User(2, "Eve", new Date()));
+//        userList.add(new User(3, "Jack", new Date()));
+
     }
 
-//    private UserRepository userRepository;
+    private UserRepository userRepository;
 
     public UserServiceImpl() {
     }
 
-//    public UserServiceImpl(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -69,25 +74,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Post> getAllUserPosts(long userId) {
-        return getUser(userId).getUserPosts();
+        //return getUser(userId).getUserPosts();
+        return null;
     }
 
     @Override
     public Post createUserPost(long userId, Post post) {
         User user = getUser(userId);
-        user.getUserPosts().add(post);
+      //  user.getUserPosts().add(post);
         return post;
     }
 
     @Override
     public Post retrieveUserPost(long userId, long postId) {
         User user = getUser(userId);
-        List<Post> userPost = user.getUserPosts();
-        Optional<Post> optionalPost = userPost.stream()
-                .filter(post -> post.getId() == postId)
-                .findFirst();
+//        List<Post> userPost = user.getUserPosts();
+//        Optional<Post> optionalPost = userPost.stream()
+//                .filter(post -> post.getId() == postId)
+//                .findFirst();
+//
+//        optionalPost.orElseThrow(() -> new PostNotFoundException("Post not found"));
+//        return optionalPost.get();
 
-        optionalPost.orElseThrow(() -> new PostNotFoundException("Post not found"));
-        return optionalPost.get();
+        return null;
     }
 }

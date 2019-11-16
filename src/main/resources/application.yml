@@ -14,6 +14,11 @@ spring:
     user:
       name: user
       password: password
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
 
 # Trim this down for production to prevent performance impact
 management:
